@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>潦草学习 AppleScript：AppleScript 初上手 | blog of nonefffds</title>
+  <meta name="description" content="潦草学习 AppleScript：AppleScript 初上手潦草，即为不认真之意。 前言这两天接触了一下 AppleScript，发现还挺简单的，于是开始稍微学习了一下，正如标题所说——潦草学习，大概就是学到哪算哪的感觉。 这篇文章将会说明 AppleScript 的初期设置和一些基础语法，然后将会用一个用于上网课偷懒的小程序（尽量不要跟着模仿）作为对微信和 Safari 的控制演示。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="潦草学习 AppleScript：AppleScript 初上手">
+<meta property="og:url" content="https://nonefffds.github.io/2020/04/10/%E6%BD%A6%E8%8D%89%E5%AD%A6%E4%B9%A0%20AppleScript%EF%BC%9AAppleScript%20%E5%88%9D%E4%B8%8A%E6%89%8B/index.html">
+<meta property="og:site_name" content="blog of nonefffds">
+<meta property="og:description" content="潦草学习 AppleScript：AppleScript 初上手潦草，即为不认真之意。 前言这两天接触了一下 AppleScript，发现还挺简单的，于是开始稍微学习了一下，正如标题所说——潦草学习，大概就是学到哪算哪的感觉。 这篇文章将会说明 AppleScript 的初期设置和一些基础语法，然后将会用一个用于上网课偷懒的小程序（尽量不要跟着模仿）作为对微信和 Safari 的控制演示。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://nonefffds.github.io/2020/04/10/%E6%BD%A6%E8%8D%89%E5%AD%A6%E4%B9%A0%20AppleScript%EF%BC%9AAppleScript%20%E5%88%9D%E4%B8%8A%E6%89%8B/15864523571150.png">
+<meta property="og:image" content="https://nonefffds.github.io/2020/04/10/%E6%BD%A6%E8%8D%89%E5%AD%A6%E4%B9%A0%20AppleScript%EF%BC%9AAppleScript%20%E5%88%9D%E4%B8%8A%E6%89%8B/15864532386213.png">
+<meta property="og:image" content="https://nonefffds.github.io/2020/04/10/%E6%BD%A6%E8%8D%89%E5%AD%A6%E4%B9%A0%20AppleScript%EF%BC%9AAppleScript%20%E5%88%9D%E4%B8%8A%E6%89%8B/15864544216139.png">
+<meta property="og:image" content="https://nonefffds.github.io/2020/04/10/%E6%BD%A6%E8%8D%89%E5%AD%A6%E4%B9%A0%20AppleScript%EF%BC%9AAppleScript%20%E5%88%9D%E4%B8%8A%E6%89%8B/15864552216000.png">
+<meta property="og:image" content="https://nonefffds.github.io/2020/04/10/%E6%BD%A6%E8%8D%89%E5%AD%A6%E4%B9%A0%20AppleScript%EF%BC%9AAppleScript%20%E5%88%9D%E4%B8%8A%E6%89%8B/%E6%88%AA%E5%B1%8F2020-04-10%20%E4%B8%8A%E5%8D%882.17.00.png">
+<meta property="article:published_time" content="2020-04-09T16:57:13.000Z">
+<meta property="article:modified_time" content="2022-02-25T07:11:17.322Z">
+<meta property="article:author" content="nonefffds">
+<meta property="article:tag" content="Coding">
+<meta property="article:tag" content="macOS">
+<meta property="article:tag" content="AppleScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nonefffds.github.io/2020/04/10/%E6%BD%A6%E8%8D%89%E5%AD%A6%E4%B9%A0%20AppleScript%EF%BC%9AAppleScript%20%E5%88%9D%E4%B8%8A%E6%89%8B/15864523571150.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://nonefffds.github.io/2020/04/10/%E6%BD%A6%E8%8D%89%E5%AD%A6%E4%B9%A0%20AppleScript%EF%BC%9AAppleScript%20%E5%88%9D%E4%B8%8A%E6%89%8B/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="blog of nonefffds" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/nonefffds" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">FDS</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">A student, code-less coder.</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Tianjin &amp; Henan, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/nonefffds" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/871761114" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/nonefffds" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>Hello world!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AppleScript/" rel="tag">AppleScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BSD/" rel="tag">BSD</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bootstrap/" rel="tag">Bootstrap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Coding/" rel="tag">Coding</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/File-System/" rel="tag">File System</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-System/" rel="tag">Operating System</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/" rel="tag">Windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/macOS/" rel="tag">macOS</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/" rel="tag">tools</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/AppleScript/" style="font-size: 13px;">AppleScript</a> <a href="/tags/BSD/" style="font-size: 13.33px;">BSD</a> <a href="/tags/Bootstrap/" style="font-size: 13px;">Bootstrap</a> <a href="/tags/CSS/" style="font-size: 13px;">CSS</a> <a href="/tags/Coding/" style="font-size: 13.67px;">Coding</a> <a href="/tags/File-System/" style="font-size: 13px;">File System</a> <a href="/tags/HTML/" style="font-size: 13px;">HTML</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Operating-System/" style="font-size: 13px;">Operating System</a> <a href="/tags/Shell/" style="font-size: 13px;">Shell</a> <a href="/tags/Windows/" style="font-size: 13px;">Windows</a> <a href="/tags/macOS/" style="font-size: 14px;">macOS</a> <a href="/tags/python/" style="font-size: 13px;">python</a> <a href="/tags/tools/" style="font-size: 13.33px;">tools</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/09/14/python-python3/" class="title">在 shell 中使用 Python 命令时自动使用 Python3</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-09-14T13:15:13.000Z" itemprop="datePublished">2021-09-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/09/13/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E7%AE%80%E5%8D%95%E6%A8%A1%E4%BB%BF%E5%86%99%E5%87%BA%E7%A4%BE%E4%BA%A4%E8%B4%A6%E6%88%B7%E5%AF%BC%E8%88%AA%E9%A1%B5%E7%9A%84%E5%8E%86%E7%A8%8B/" class="title">从零开始，简单模仿写出社交账户导航页的历程</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-09-13T13:34:00.000Z" itemprop="datePublished">2021-09-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/04/11/Mac-%E5%BD%95%E5%B1%8F%E5%86%85%E5%BD%95%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="title">Mac 录屏内录解决方案</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-04-11T09:44:53.000Z" itemprop="datePublished">2020-04-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/04/10/%E6%BD%A6%E8%8D%89%E5%AD%A6%E4%B9%A0%20AppleScript%EF%BC%9AAppleScript%20%E5%88%9D%E4%B8%8A%E6%89%8B/" class="title">潦草学习 AppleScript：AppleScript 初上手</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-04-09T16:57:13.000Z" itemprop="datePublished">2020-04-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/02/25/%E4%BD%BF%E7%94%A8%20crontab%20%E8%AE%A1%E5%88%92%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E5%AE%9A%E6%97%B6%E7%BB%99%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99%E5%88%97%E8%A1%A8/" class="title">使用 crontab 计划定时任务定时给学习资料列表</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-02-24T16:57:13.000Z" itemprop="datePublished">2020-02-25</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-潦草学习 AppleScript：AppleScript 初上手" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      潦草学习 AppleScript：AppleScript 初上手
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/04/10/%E6%BD%A6%E8%8D%89%E5%AD%A6%E4%B9%A0%20AppleScript%EF%BC%9AAppleScript%20%E5%88%9D%E4%B8%8A%E6%89%8B/" class="article-date">
+	  <time datetime="2020-04-09T16:57:13.000Z" itemprop="datePublished">2020-04-10</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/AppleScript/" rel="tag">AppleScript</a>, <a class="article-tag-link-link" href="/tags/Coding/" rel="tag">Coding</a>, <a class="article-tag-link-link" href="/tags/macOS/" rel="tag">macOS</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/04/10/%E6%BD%A6%E8%8D%89%E5%AD%A6%E4%B9%A0%20AppleScript%EF%BC%9AAppleScript%20%E5%88%9D%E4%B8%8A%E6%89%8B/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="潦草学习-AppleScript：AppleScript-初上手"><a href="#潦草学习-AppleScript：AppleScript-初上手" class="headerlink" title="潦草学习 AppleScript：AppleScript 初上手"></a>潦草学习 AppleScript：AppleScript 初上手</h1><p><em>潦草，即为不认真之意。</em></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这两天接触了一下 AppleScript，发现还挺简单的，于是开始稍微学习了一下，正如标题所说——潦草学习，大概就是学到哪算哪的感觉。</p>
+<p>这篇文章将会说明 AppleScript 的初期设置和一些基础语法，然后将会用一个用于上网课偷懒的小程序（尽量不要跟着模仿）作为对微信和 Safari 的控制演示。</p>
+<a id="more"></a>
+
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>你需要准备的：</p>
+<ul>
+<li>一台搭载 MacOS 的电脑（白果黑果皆可）和配套键鼠</li>
+<li>脑子</li>
+</ul>
+<p>关于要使用的 IDE，其实在苹果系统中已经自带了。你可以直接使用系统内的“脚本编辑器”，也可以使用你现有的更现代的 IDE，例如本文中使用的 VSCode 加 AppleScript 插件。<br>VSCode 的安装你可以直接在命令行使用<code>brew cask install visual-studio-code</code>（需要 homebrew，可参考本博客上一篇文章）进行安装。<br>在 VSCode 内，直接在左侧的功能键点插件然后搜索 AppleScript 选择第一项安装即可。<br><img src="15864523571150.png" alt=""></p>
+<p>然后就没什么能准备的了，如果需要运行写好的 AppleScript 直接按 Shift + F5 就能直接运行了（单按 F5 则是 debug，或者直接在选项栏里点 Run 选前两项运行）。</p>
+<h2 id="AppleScript-基础语法"><a href="#AppleScript-基础语法" class="headerlink" title="AppleScript 基础语法"></a>AppleScript 基础语法</h2><p>我的最初的 AppleScript 入门来自于<a href="https://sspai.com/post/46912" target="_blank" rel="noopener">少数派的这篇文章</a>，推荐看一下这篇文章，看完后大概会对 AppleScript 有一个最基础的了解。</p>
+<p>以下，是一个用 AppleScript 写的 Hello World 程序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set FirstProgram to &quot;Hello World&quot;</span><br></pre></td></tr></table></figure>
+
+<p>运行就会得到 “Hello World” 的结果，然而这句代码的含义仅仅是设定一个名为 FirstProgram 的变量，内容是  “Hello World” 而已，其中并没有使用到其他语言中可能常用的 print, println, printf 之类的打印输出命令，因为我在 AppleScript 中一直没找着这个对应的命令是什么… 如果有人知道希望能评论告诉我一下，谢谢…</p>
+<p>如果要调出一个窗口显示 Hello World，则可以这么写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">display dialog (&quot;Hello World&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>运行之后就会得到一个这样的窗口<br><img src="15864532386213.png" alt=""><br>以上です。</p>
+<p>这就是最基本的语法了，那我们来练个习吧！<br>练习1.1: 请试用 AppleScript 写出检验 ISBN 号是否正确的程序<br>（并不）</p>
+<p>…作为一个用 Project 学习的其实也差不多了，不过这次我们的目标是用 AppleScript 做一个自动微信签到并且登录网课的偷懒工具，接下来我会通过写这个工具来慢慢解释每句用到的东西的意义。</p>
+<p>注：在 AppleScript 内你可以使用 <code>--</code> <code>#</code> <code>//</code>等符号作为注释开头（和结尾），苹果是推荐你用第一种的，但是在接下来的内容中为了方便我自己，我都会用井号进行注释。</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>我们的需求功能是：</p>
+<ul>
+<li>在微信班级大群里发送每天早上的报道</li>
+<li>打开网课页面并进入网课</li>
+</ul>
+<h3 id="最终代码-Showcase"><a href="#最终代码-Showcase" class="headerlink" title="最终代码 Showcase"></a>最终代码 Showcase</h3><p>以下是本例的最终代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tell application &quot;WeChat&quot; to activatetell application &quot;System Events&quot;	tell process &quot;Wechat&quot;		keystroke &quot;fandishengdao&quot; 		keystroke &quot;1&quot;		key code 36	end tell	delay 6end telltell application &quot;Safari&quot; to activatetell application &quot;Safari&quot;	tell window 1		set current tab to (make new tab with properties &#123;URL:&quot;https:&#x2F;&#x2F;brunhild.cn&#x2F;demo&#x2F;study_center&#x2F;schedule.vpage&quot;&#125;)		delay 300		tell application &quot;System Events&quot;			click at &#123;1587, 507&#125;			delay 60		end tell	end tellend tell</span><br></pre></td></tr></table></figure>
+<h3 id="在微信班级大群里发送每天早上的报道"><a href="#在微信班级大群里发送每天早上的报道" class="headerlink" title="在微信班级大群里发送每天早上的报道"></a>在微信班级大群里发送每天早上的报道</h3><p>首先，是第一行<code>tell application &quot;WeChat&quot; to activate</code>，它的作用是告诉(tell)微信(“WeChat”)这个应用程序(application)让(to)他打开(activate)。<br><img src="15864544216139.png" alt="这是一个小号"><br>然后我们将默认打开的那个页面是你要发送的大群页面（微信并没有相关 API 检测你开的是哪个聊天页面，不过你可以使用微信置顶的方式保证你打开的是你要发送的页面，但更重要的原因是，我懒）。</p>
+<p>然后我们就可以报道了。<br>接下来我们要调用 <code>System Events</code> 来帮我们输入报道消息并发送了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tell application &quot;System Events&quot; #调用应用 System Events	tell process &quot;Wechat&quot; #告诉进程微信		keystroke &quot;fandishengdao&quot; #模拟按键输入&quot;fandishengdao&quot;，你可以根据需要改成你自己的名字，在本例中范迪盛并不是我的真名		keystroke &quot;1&quot; #模拟按键输入&quot;1&quot;，即输入法选择第一项		key code 36 #按下回车	end tell #结束“告诉”	delay 6 #延迟六秒钟end tell #结束“告诉”</span><br></pre></td></tr></table></figure>
+<p><img src="15864552216000.png" alt=""></p>
+<p>你可能在此会问了，其中的 keystroke 既然可以模拟输入，那为什么不干脆直接输入中文得了，而是要在有输入法的前提下调用输入法进行操作呢？<br>非常简单，因为如果你 keystroke，它会输出乱码。所以必须绕一步路。（除非你们群用英语答到）</p>
+<p>然后关于你键盘上的所有 key code，可以参考一下<a href="https://eastmanreference.com/complete-list-of-applescript-key-codes" target="_blank" rel="noopener">这个链接</a>。</p>
+<p>至于最后为什么有个 <code>delay 6</code>，是因为如果不稍微延迟一下，接下来要运行的 Safari 窗口可能会挡住原来的窗口（尽管这并不是个问题，不过我就是加了，这个命令我也建议记一下）。</p>
+<p>OKay，答完“到”了，我们可以开始“上”网课了。</p>
+<h3 id="打开网课页面并进入网课"><a href="#打开网课页面并进入网课" class="headerlink" title="打开网课页面并进入网课"></a>打开网课页面并进入网课</h3><p>首先我们需要呼出 Safari：<code>tell application &quot;Safari&quot; to activate</code><br>然后接下来就是行云流水的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tell application &quot;Safari&quot;	tell window 1 #告诉第一个窗口		set current tab to (make new tab with properties &#123;URL:&quot;https:&#x2F;&#x2F;brunhild.cn&#x2F;demo&#x2F;study_center&#x2F;schedule.vpage&quot;&#125;) </span><br><span class="line">		#设定目前的tab到（创建一个带有属性：链接 的新tab，链接是：～）</span><br><span class="line">		#此处的链接是一个虚假的链接，域名并没有使用实际的链接		delay 300 #延迟300秒用来等待网页加载，总不可能300秒还加载不出来吧		tell application &quot;System Events&quot;			click at &#123;1587, 507&#125;#点击开始上课的按钮的坐标			delay 60 #延迟60秒			end tell	end tellend tell</span><br></pre></td></tr></table></figure>
+<p>其中你觉得要是有可能没点上就可以再加一行<code>click at</code>，其中取得坐标点要根据实际网页的位置进行修改。<img src="%E6%88%AA%E5%B1%8F2020-04-10%20%E4%B8%8A%E5%8D%882.17.00.png" alt="截屏2020-04-10 上午2.17.00"><br>然后就可以自动开始上课了。</p>
+<p>那接下来就有一个问题了，如何才能让这个脚本自动运行呢？</p>
+<h3 id="使脚本自动运行"><a href="#使脚本自动运行" class="headerlink" title="使脚本自动运行"></a>使脚本自动运行</h3><p>严格说来这部分已经不属于 AppleScript 范畴了，不过我还是大概说一下。</p>
+<p>你可以使用 Crontab，launchd 和 iCal 进行脚本的自动运行。我使用的是 iCal，也就是系统自带的那个日历软件。</p>
+<p>使用 iCal 设置定时运行脚本的方法可以参考<a href="https://sspai.com/post/41735" target="_blank" rel="noopener">少数派的这篇文章</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>也没什么好总结的，<del>就是水一片文章</del>，本文中的所有代码你可以从<a href="https://github.com/nonefffds/broadcast-classroom-lazy" target="_blank" rel="noopener">这个GitHub Repo</a> 里找到。我们下篇文章再见！</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://nonefffds.github.io/2020/04/10/%E6%BD%A6%E8%8D%89%E5%AD%A6%E4%B9%A0%20AppleScript%EF%BC%9AAppleScript%20%E5%88%9D%E4%B8%8A%E6%89%8B/" title="潦草学习 AppleScript：AppleScript 初上手" target="_blank" rel="external">https://nonefffds.github.io/2020/04/10/潦草学习 AppleScript：AppleScript 初上手/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/nonefffds" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/nonefffds" target="_blank"><span class="text-dark">FDS</span><small class="ml-1x">A student, code-less coder.</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/04/11/Mac-%E5%BD%95%E5%B1%8F%E5%86%85%E5%BD%95%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" title="Mac 录屏内录解决方案"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2020/02/25/%E4%BD%BF%E7%94%A8%20crontab%20%E8%AE%A1%E5%88%92%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E5%AE%9A%E6%97%B6%E7%BB%99%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99%E5%88%97%E8%A1%A8/" title="使用 crontab 计划定时任务定时给学习资料列表"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/nonefffds" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/871761114" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/nonefffds" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Not available',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

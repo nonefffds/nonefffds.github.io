@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>使用 crontab 计划定时任务定时给学习资料列表 | blog of nonefffds</title>
+  <meta name="description" content="使用 crontab 计划定时任务定时给学习资料列表是真的学习资料 前言近期由于疫情的原因，只能呆在家里自主学习。然后老师在微信里发了一堆需要复习的文档和需要写的作业，并且我所在的天津市教育局也有相关的复习课程需要听。作为一个懒人，当然还是起不了床看电视视频的，于是每天都会从官方网站上下载下来视频存到电脑里回来再看，那么这一堆堆文件的存放就成了问题。（其实不是多大的问题，我感觉我这属于创造一个不需">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 crontab 计划定时任务定时给学习资料列表">
+<meta property="og:url" content="https://nonefffds.github.io/2020/02/25/%E4%BD%BF%E7%94%A8%20crontab%20%E8%AE%A1%E5%88%92%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E5%AE%9A%E6%97%B6%E7%BB%99%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99%E5%88%97%E8%A1%A8/index.html">
+<meta property="og:site_name" content="blog of nonefffds">
+<meta property="og:description" content="使用 crontab 计划定时任务定时给学习资料列表是真的学习资料 前言近期由于疫情的原因，只能呆在家里自主学习。然后老师在微信里发了一堆需要复习的文档和需要写的作业，并且我所在的天津市教育局也有相关的复习课程需要听。作为一个懒人，当然还是起不了床看电视视频的，于是每天都会从官方网站上下载下来视频存到电脑里回来再看，那么这一堆堆文件的存放就成了问题。（其实不是多大的问题，我感觉我这属于创造一个不需">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-24T16:57:13.000Z">
+<meta property="article:modified_time" content="2022-02-25T07:11:12.531Z">
+<meta property="article:author" content="nonefffds">
+<meta property="article:tag" content="macOS">
+<meta property="article:tag" content="tools">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="BSD">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://nonefffds.github.io/2020/02/25/%E4%BD%BF%E7%94%A8%20crontab%20%E8%AE%A1%E5%88%92%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E5%AE%9A%E6%97%B6%E7%BB%99%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99%E5%88%97%E8%A1%A8/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="blog of nonefffds" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/nonefffds" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">FDS</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">A student, code-less coder.</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Tianjin &amp; Henan, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/nonefffds" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/871761114" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/nonefffds" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>Hello world!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AppleScript/" rel="tag">AppleScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BSD/" rel="tag">BSD</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bootstrap/" rel="tag">Bootstrap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Coding/" rel="tag">Coding</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/File-System/" rel="tag">File System</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-System/" rel="tag">Operating System</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/" rel="tag">Windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/macOS/" rel="tag">macOS</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/" rel="tag">tools</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/AppleScript/" style="font-size: 13px;">AppleScript</a> <a href="/tags/BSD/" style="font-size: 13.33px;">BSD</a> <a href="/tags/Bootstrap/" style="font-size: 13px;">Bootstrap</a> <a href="/tags/CSS/" style="font-size: 13px;">CSS</a> <a href="/tags/Coding/" style="font-size: 13.67px;">Coding</a> <a href="/tags/File-System/" style="font-size: 13px;">File System</a> <a href="/tags/HTML/" style="font-size: 13px;">HTML</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Operating-System/" style="font-size: 13px;">Operating System</a> <a href="/tags/Shell/" style="font-size: 13px;">Shell</a> <a href="/tags/Windows/" style="font-size: 13px;">Windows</a> <a href="/tags/macOS/" style="font-size: 14px;">macOS</a> <a href="/tags/python/" style="font-size: 13px;">python</a> <a href="/tags/tools/" style="font-size: 13.33px;">tools</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/09/14/python-python3/" class="title">在 shell 中使用 Python 命令时自动使用 Python3</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-09-14T13:15:13.000Z" itemprop="datePublished">2021-09-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/09/13/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E7%AE%80%E5%8D%95%E6%A8%A1%E4%BB%BF%E5%86%99%E5%87%BA%E7%A4%BE%E4%BA%A4%E8%B4%A6%E6%88%B7%E5%AF%BC%E8%88%AA%E9%A1%B5%E7%9A%84%E5%8E%86%E7%A8%8B/" class="title">从零开始，简单模仿写出社交账户导航页的历程</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-09-13T13:34:00.000Z" itemprop="datePublished">2021-09-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/04/11/Mac-%E5%BD%95%E5%B1%8F%E5%86%85%E5%BD%95%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="title">Mac 录屏内录解决方案</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-04-11T09:44:53.000Z" itemprop="datePublished">2020-04-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/04/10/%E6%BD%A6%E8%8D%89%E5%AD%A6%E4%B9%A0%20AppleScript%EF%BC%9AAppleScript%20%E5%88%9D%E4%B8%8A%E6%89%8B/" class="title">潦草学习 AppleScript：AppleScript 初上手</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-04-09T16:57:13.000Z" itemprop="datePublished">2020-04-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/02/25/%E4%BD%BF%E7%94%A8%20crontab%20%E8%AE%A1%E5%88%92%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E5%AE%9A%E6%97%B6%E7%BB%99%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99%E5%88%97%E8%A1%A8/" class="title">使用 crontab 计划定时任务定时给学习资料列表</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-02-24T16:57:13.000Z" itemprop="datePublished">2020-02-25</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-使用 crontab 计划定时任务定时给学习资料列表" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      使用 crontab 计划定时任务定时给学习资料列表
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/02/25/%E4%BD%BF%E7%94%A8%20crontab%20%E8%AE%A1%E5%88%92%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E5%AE%9A%E6%97%B6%E7%BB%99%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99%E5%88%97%E8%A1%A8/" class="article-date">
+	  <time datetime="2020-02-24T16:57:13.000Z" itemprop="datePublished">2020-02-25</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/BSD/" rel="tag">BSD</a>, <a class="article-tag-link-link" href="/tags/Linux/" rel="tag">Linux</a>, <a class="article-tag-link-link" href="/tags/macOS/" rel="tag">macOS</a>, <a class="article-tag-link-link" href="/tags/tools/" rel="tag">tools</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/02/25/%E4%BD%BF%E7%94%A8%20crontab%20%E8%AE%A1%E5%88%92%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E5%AE%9A%E6%97%B6%E7%BB%99%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99%E5%88%97%E8%A1%A8/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="使用-crontab-计划定时任务定时给学习资料列表"><a href="#使用-crontab-计划定时任务定时给学习资料列表" class="headerlink" title="使用 crontab 计划定时任务定时给学习资料列表"></a>使用 crontab 计划定时任务定时给学习资料列表</h1><p><em>是真的学习资料</em></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>近期由于疫情的原因，只能呆在家里自主学习。然后老师在微信里发了一堆需要复习的文档和需要写的作业，并且我所在的天津市教育局也有相关的复习课程需要听。作为一个懒人，当然还是起不了床看电视视频的，于是每天都会从官方网站上下载下来视频存到电脑里回来再看，那么这一堆堆文件的存放就成了问题。（其实不是多大的问题，我感觉我这属于创造一个不需要的需求）<br>这篇文章主要是写了如何使用 crontab 来进行文件夹列表命令的。（目的挺水的，就随便写写）</p>
+<a id="more"></a>
+
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>我用的系统是 MacOS Catalina 10.15.3，Shell是 Zsh 并安装了 oh-my-zsh。</p>
+<p>由于我使用的 MacOS 并不自带我需要的 <code>tree</code> 命令，于是需要使用 Homebrew 进行安装：</p>
+<p><code>brew install tree</code></p>
+<p>如果系统内并没有 HomeBrew，请参考<a href="https://sspai.com/post/42924" target="_blank" rel="noopener">少数派的这篇文章</a></p>
+<p>系统内是自带 Crontab 的，所以直接用就行了。</p>
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><h3 id="将-shell-内容输出到文本可以使用-gt-gt-或-gt-，例如："><a href="#将-shell-内容输出到文本可以使用-gt-gt-或-gt-，例如：" class="headerlink" title="将 shell 内容输出到文本可以使用 &gt;&gt;或--&gt;，例如："></a>将 shell 内容输出到文本可以使用 <code>&gt;&gt;</code>或<code>--&gt;</code>，例如：</h3><p><code>neofetch --&gt; ~/Documents/neofetch.txt</code></p>
+<p>运行之后在 <code>~/Documents/</code> 下就会有个 neofetch.txt 的文件，里面是 neofetch 运行后的输出内容。</p>
+<h3 id="Crontab-的语法："><a href="#Crontab-的语法：" class="headerlink" title="Crontab 的语法："></a>Crontab 的语法：</h3><p><code>crontab [-u user] file</code><br>或<br><code>crontab [-u user] [-l | -r | -e] [-i] [-s]</code></p>
+<p>其中：<br><code>-u user</code> 就是需要进行定时的用户；<br><code>file</code> 就是需要读取的 crontab 数据文件（如果file是<code>-</code>时，则shell会从终端读取标准输入(STDIN)）；<br><code>-l</code> 是显示当前的 crontab；<br><code>-r</code> 是移除当前的 crontab；<br><code>-e</code> 是使用编辑器当前的 crontab（默认使用 vi 编辑，如果需要更改其他编辑器需要更改用户变量）；<br><code>-i</code> 作用同 -r，但是多了一个用户确认选项；<br><code>-s</code> 仅用于 SELinux 情况。</p>
+<p>关于 crontab 文件的格式：</p>
+<p>被空格分开的每个区域叫做一个区域或叫做“域”。</p>
+<p>在 <code>/var/spool/cron</code> 下的 crontab 文件是用户层次的（<em>本文档仅涉及到用户层次，如需要在系统层次设定 crontab 则需要在被执行命令前添加需要指定的用户名</em>），格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 文件格式说明</span><br><span class="line"># ┌──分钟（0 - 59）</span><br><span class="line"># │  ┌──小时（0 - 23）</span><br><span class="line"># │  │  ┌──日（1 - 31）</span><br><span class="line"># │  │  │  ┌─月（1 - 12）</span><br><span class="line"># │  │  │  │  ┌─星期（0 - 6，表示从周日到周六，在某些系统中星期日为7）</span><br><span class="line"># │  │  │  │  │</span><br><span class="line"># *  *  *  *  * 被执行的命令</span><br></pre></td></tr></table></figure>
+
+<p>注：如果日期和星期同时被设定，那么其中的一个条件被满足时，指令便会被执行。</p>
+<p>在一个区域里填写多个数值的方法：</p>
+<ul>
+<li>逗号（,）表示列举，例如： <code>1,3,4,7 * * * * echo hello world</code> 表示，在每小时的1、3、4、7分时，打印”hello world”。</li>
+<li>连词符（-）表示范围，例如：<code>1-6 * * * * echo hello world</code> ，表示，每小时的1到6分钟内，每分钟都会打印”hello world”。</li>
+<li>星号（*）代表任何可能的值。例如：在“小时域”里的星号等于是“每一个小时”。</li>
+<li>百分号(%) 表示“每”。例如：<code>*%10 * * * * echo hello world</code> 表示，每10分钟打印一回”hello world”。</li>
+</ul>
+<p>其他内容请参阅 crontab 文档。（最下方参考资料中有放）</p>
+<h3 id="tree-命令的使用方式"><a href="#tree-命令的使用方式" class="headerlink" title="tree 命令的使用方式"></a>tree 命令的使用方式</h3><p>以下内容复制自<code>runoob.com</code></p>
+<p><code>tree [-aACdDfFgilnNpqstux][-I &lt;范本样式&gt;][-P &lt;范本样式&gt;][目录...]</code></p>
+<p>参数说明：</p>
+<ul>
+<li><code>-a</code> 显示所有文件和目录。</li>
+<li><code>-A</code> 使用ASNI绘图字符显示树状图而非以ASCII字符组合。</li>
+<li><code>-C</code> 在文件和目录清单加上色彩，便于区分各种类型。</li>
+<li><code>-d</code> 显示目录名称而非内容。</li>
+<li><code>-D</code> 列出文件或目录的更改时间。</li>
+<li><code>-f</code> 在每个文件或目录之前，显示完整的相对路径名称。</li>
+<li><code>-F</code> 在执行文件，目录，Socket，符号连接，管道名称名称，各自加上”*”,”/“,”=”,”@”,”|”号。</li>
+<li><code>-g</code> 列出文件或目录的所属群组名称，没有对应的名称时，则显示群组识别码。</li>
+<li><code>-i</code> 不以阶梯状列出文件或目录名称。</li>
+<li><code>-I</code>&lt;范本样式&gt; 不显示符合范本样式的文件或目录名称。</li>
+<li><code>-l</code> 如遇到性质为符号连接的目录，直接列出该连接所指向的原始目录。</li>
+<li><code>-n</code> 不在文件和目录清单加上色彩。</li>
+<li><code>-N</code> 直接列出文件和目录名称，包括控制字符。</li>
+<li><code>-p</code> 列出权限标示。</li>
+<li><code>-P</code>&lt;范本样式&gt; 只显示符合范本样式的文件或目录名称。</li>
+<li><code>-q</code> 用”?”号取代控制字符，列出文件和目录名称。</li>
+<li><code>-s</code> 列出文件或目录大小。</li>
+<li><code>-t</code> 用文件和目录的更改时间排序。</li>
+<li><code>-u</code> 列出文件或目录的拥有者名称，没有对应的名称时，则显示用户识别码。</li>
+<li><code>-x</code> 将范围局限在现行的文件系统中，若指定目录下的某些子目录，其存放于另一个文件系统上，则将该子目录予以排除在寻找范围外。</li>
+</ul>
+<h2 id="正式使用"><a href="#正式使用" class="headerlink" title="正式使用"></a>正式使用</h2><p>这部分具体应用内容贼短，主要是最近没有其他实际需求了… 就当 crontab 的一个实际使用了。</p>
+<p>接下来是我的实际操作：</p>
+<p>我是直接用的 <code>crontab -e</code> 命令进 vi 直接编辑的。（vi使用教程就不写了…）<br>进去先按 i 键进入编辑模式左下角会出现 [Insert] 的标示，然后直接复制进去已经编好的 corntab 内容，内容是：<code>0 23 * * * tree &#39;/Users/fds/iCloud云盘（归档）/停课不停学&#39; -I &quot;list&quot; -N --&gt; &#39;/Users/fds/iCloud云盘（归档）/停课不停学/list/list.txt&#39;</code></p>
+<p>其中 <code>0 23 * * *</code> 代表每天的23点运行（也可以写成<code>* 23 * * *</code>)；<br>tree 命令目录后面的 <code>-I &quot;list&quot;</code> 代表忽略需要 tree 的文件夹里的子文件夹 list；<br><code>-N</code> 代表所有文字直接输出（不然中文字符会乱码）。</p>
+<p>复制后直接按 escape 键 输入<code>:wq</code>即可保存。</p>
+<p>之后在终端里输入 <code>crontab -l</code> 来检查 crontab 是否已经成功运行。</p>
+<p>以上です。</p>
+<p>（结果待更新，因为理论上到这就能结束了然而我输出完是个空文档… 不带 crontab 倒是能正常导出，回来再试吧）</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a href="https://zh.wikipedia.org/wiki/Cron" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/Cron</a></li>
+<li><a href="https://www.computerhope.com/unix/ucrontab.htm" target="_blank" rel="noopener">https://www.computerhope.com/unix/ucrontab.htm</a></li>
+<li><a href="https://www.runoob.com/linux/linux-comm-crontab.html" target="_blank" rel="noopener">https://www.runoob.com/linux/linux-comm-crontab.html</a></li>
+<li><a href="https://translate.google.com/" target="_blank" rel="noopener">https://translate.google.com/</a></li>
+<li><a href="https://www.jianshu.com/p/15a96c1de695" target="_blank" rel="noopener">https://www.jianshu.com/p/15a96c1de695</a></li>
+</ol>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://nonefffds.github.io/2020/02/25/%E4%BD%BF%E7%94%A8%20crontab%20%E8%AE%A1%E5%88%92%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E5%AE%9A%E6%97%B6%E7%BB%99%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99%E5%88%97%E8%A1%A8/" title="使用 crontab 计划定时任务定时给学习资料列表" target="_blank" rel="external">https://nonefffds.github.io/2020/02/25/使用 crontab 计划定时任务定时给学习资料列表/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/nonefffds" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/nonefffds" target="_blank"><span class="text-dark">FDS</span><small class="ml-1x">A student, code-less coder.</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/04/10/%E6%BD%A6%E8%8D%89%E5%AD%A6%E4%B9%A0%20AppleScript%EF%BC%9AAppleScript%20%E5%88%9D%E4%B8%8A%E6%89%8B/" title="潦草学习 AppleScript：AppleScript 初上手"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2019/11/13/%E5%90%84%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AF%B9%E5%90%84%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8E%9F%E7%94%9F%E6%94%AF%E6%8C%81%E6%83%85%E5%86%B5/" title="各操作系统对各文件系统的原生支持情况"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/nonefffds" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/871761114" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/nonefffds" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Not available',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

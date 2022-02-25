@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>从零开始，简单模仿写出社交账户导航页的历程 | blog of nonefffds</title>
+  <meta name="description" content="从零开始，简单模仿写出社交账户导航页的历程真的，是从零开始吗 一年前，我偶然看到我喜欢的一些日本艺人的 instagram 账户页面上面的推广链接用了 Linktree 的服务，觉得这种把自己的账户用这样的方式集中到一起的方式比较便于他人访问。然而 Linktree 的一些高级功能需要付费，并且似乎看上去最基本的功能也能自己实现，于是就想自己手动写一个类似功能的导航页面出来，顺便学习一下 HTML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从零开始，简单模仿写出社交账户导航页的历程">
+<meta property="og:url" content="https://nonefffds.github.io/2021/09/13/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E7%AE%80%E5%8D%95%E6%A8%A1%E4%BB%BF%E5%86%99%E5%87%BA%E7%A4%BE%E4%BA%A4%E8%B4%A6%E6%88%B7%E5%AF%BC%E8%88%AA%E9%A1%B5%E7%9A%84%E5%8E%86%E7%A8%8B/index.html">
+<meta property="og:site_name" content="blog of nonefffds">
+<meta property="og:description" content="从零开始，简单模仿写出社交账户导航页的历程真的，是从零开始吗 一年前，我偶然看到我喜欢的一些日本艺人的 instagram 账户页面上面的推广链接用了 Linktree 的服务，觉得这种把自己的账户用这样的方式集中到一起的方式比较便于他人访问。然而 Linktree 的一些高级功能需要付费，并且似乎看上去最基本的功能也能自己实现，于是就想自己手动写一个类似功能的导航页面出来，顺便学习一下 HTML">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://nonefffds.github.io/%E5%AF%BC%E8%88%AA%E9%A1%B5%E7%AC%AC%E4%B8%80%E7%89%88.jpg">
+<meta property="og:image" content="https://nonefffds.github.io/Bootstrap%E7%BD%91%E6%A0%BC%E7%B3%BB%E7%BB%9F.png">
+<meta property="og:image" content="https://nonefffds.github.io/perfers-color-scheme%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%BC%E5%AE%B9%E6%83%85%E5%86%B5.png">
+<meta property="og:image" content="https://nonefffds.github.io/%E5%AF%B9%E6%AF%94.jpg">
+<meta property="article:published_time" content="2021-09-13T13:34:00.000Z">
+<meta property="article:modified_time" content="2022-02-25T07:50:29.167Z">
+<meta property="article:author" content="nonefffds">
+<meta property="article:tag" content="Coding">
+<meta property="article:tag" content="Bootstrap">
+<meta property="article:tag" content="HTML">
+<meta property="article:tag" content="CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nonefffds.github.io/%E5%AF%BC%E8%88%AA%E9%A1%B5%E7%AC%AC%E4%B8%80%E7%89%88.jpg">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://nonefffds.github.io/2021/09/13/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E7%AE%80%E5%8D%95%E6%A8%A1%E4%BB%BF%E5%86%99%E5%87%BA%E7%A4%BE%E4%BA%A4%E8%B4%A6%E6%88%B7%E5%AF%BC%E8%88%AA%E9%A1%B5%E7%9A%84%E5%8E%86%E7%A8%8B/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="blog of nonefffds" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/nonefffds" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">FDS</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">A student, code-less coder.</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Tianjin &amp; Henan, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/nonefffds" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/871761114" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/nonefffds" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>Hello world!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AppleScript/" rel="tag">AppleScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BSD/" rel="tag">BSD</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bootstrap/" rel="tag">Bootstrap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Coding/" rel="tag">Coding</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/File-System/" rel="tag">File System</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-System/" rel="tag">Operating System</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/" rel="tag">Windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/macOS/" rel="tag">macOS</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/" rel="tag">tools</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/AppleScript/" style="font-size: 13px;">AppleScript</a> <a href="/tags/BSD/" style="font-size: 13.33px;">BSD</a> <a href="/tags/Bootstrap/" style="font-size: 13px;">Bootstrap</a> <a href="/tags/CSS/" style="font-size: 13px;">CSS</a> <a href="/tags/Coding/" style="font-size: 13.67px;">Coding</a> <a href="/tags/File-System/" style="font-size: 13px;">File System</a> <a href="/tags/HTML/" style="font-size: 13px;">HTML</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Operating-System/" style="font-size: 13px;">Operating System</a> <a href="/tags/Shell/" style="font-size: 13px;">Shell</a> <a href="/tags/Windows/" style="font-size: 13px;">Windows</a> <a href="/tags/macOS/" style="font-size: 14px;">macOS</a> <a href="/tags/python/" style="font-size: 13px;">python</a> <a href="/tags/tools/" style="font-size: 13.33px;">tools</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/09/14/python-python3/" class="title">在 shell 中使用 Python 命令时自动使用 Python3</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-09-14T13:15:13.000Z" itemprop="datePublished">2021-09-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/09/13/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E7%AE%80%E5%8D%95%E6%A8%A1%E4%BB%BF%E5%86%99%E5%87%BA%E7%A4%BE%E4%BA%A4%E8%B4%A6%E6%88%B7%E5%AF%BC%E8%88%AA%E9%A1%B5%E7%9A%84%E5%8E%86%E7%A8%8B/" class="title">从零开始，简单模仿写出社交账户导航页的历程</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-09-13T13:34:00.000Z" itemprop="datePublished">2021-09-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/04/11/Mac-%E5%BD%95%E5%B1%8F%E5%86%85%E5%BD%95%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="title">Mac 录屏内录解决方案</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-04-11T09:44:53.000Z" itemprop="datePublished">2020-04-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/04/10/%E6%BD%A6%E8%8D%89%E5%AD%A6%E4%B9%A0%20AppleScript%EF%BC%9AAppleScript%20%E5%88%9D%E4%B8%8A%E6%89%8B/" class="title">潦草学习 AppleScript：AppleScript 初上手</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-04-09T16:57:13.000Z" itemprop="datePublished">2020-04-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/02/25/%E4%BD%BF%E7%94%A8%20crontab%20%E8%AE%A1%E5%88%92%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E5%AE%9A%E6%97%B6%E7%BB%99%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99%E5%88%97%E8%A1%A8/" class="title">使用 crontab 计划定时任务定时给学习资料列表</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-02-24T16:57:13.000Z" itemprop="datePublished">2020-02-25</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-从零开始，简单模仿写出社交账户导航页的历程" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      从零开始，简单模仿写出社交账户导航页的历程
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/09/13/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E7%AE%80%E5%8D%95%E6%A8%A1%E4%BB%BF%E5%86%99%E5%87%BA%E7%A4%BE%E4%BA%A4%E8%B4%A6%E6%88%B7%E5%AF%BC%E8%88%AA%E9%A1%B5%E7%9A%84%E5%8E%86%E7%A8%8B/" class="article-date">
+	  <time datetime="2021-09-13T13:34:00.000Z" itemprop="datePublished">2021-09-13</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/Bootstrap/" rel="tag">Bootstrap</a>, <a class="article-tag-link-link" href="/tags/CSS/" rel="tag">CSS</a>, <a class="article-tag-link-link" href="/tags/Coding/" rel="tag">Coding</a>, <a class="article-tag-link-link" href="/tags/HTML/" rel="tag">HTML</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/09/13/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E7%AE%80%E5%8D%95%E6%A8%A1%E4%BB%BF%E5%86%99%E5%87%BA%E7%A4%BE%E4%BA%A4%E8%B4%A6%E6%88%B7%E5%AF%BC%E8%88%AA%E9%A1%B5%E7%9A%84%E5%8E%86%E7%A8%8B/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="从零开始，简单模仿写出社交账户导航页的历程"><a href="#从零开始，简单模仿写出社交账户导航页的历程" class="headerlink" title="从零开始，简单模仿写出社交账户导航页的历程"></a>从零开始，简单模仿写出社交账户导航页的历程</h1><p><em>真的，是从零开始吗</em></p>
+<p>一年前，我偶然看到我喜欢的一些日本艺人的 instagram 账户页面上面的推广链接用了 <a target="_blank" rel="noopener" href="https://linktr.ee/">Linktree</a> 的服务，觉得这种把自己的账户用这样的方式集中到一起的方式比较便于他人访问。然而 Linktree 的一些高级功能需要付费，并且似乎看上去最基本的功能也能自己实现，于是就想自己手动写一个类似功能的导航页面出来，顺便学习一下 HTML。</p>
+<span id="more"></span>
+
+<p>而这样的导航页的功能非常简单：一个头像，一个账号，几个导航用的按钮就组成了这个网页的最初雏形。（如下图所示）</p>
+<p><img src="/%E5%AF%BC%E8%88%AA%E9%A1%B5%E7%AC%AC%E4%B8%80%E7%89%88.jpg"></p>
+<p>然而作为完全没学过前端（其实后端也没学过）的我，独立完成一个其他人已经做过的商业化程序实在是有点艰难。因为，首先用什么开发就成了一个问题。</p>
+<p>对于最近比较新的框架我只知道两个，一个 Bootstrap，一个 Vue。前者常见于互联网，而后者常见于互联网网课广告。</p>
+<p>然后我又翻了翻各自的开发文档，发现 Vue 似乎比 Bootstrap 难了不知道多少，遂直接选择了 Bootstrap。</p>
+<p>最后，经过不断翻各种文档的努力，我终于用三十三行代码完成了网页的<a href="https://nonefffds.github.io/RedirectionPageTemplate/index-original.html">第一个雏形</a>（如上图所示）。把这个网页做出来后，手动填上我要放的链接，再把网页挂到服务器上就完成了我的第一个纯手写的个人主页。</p>
+<p>虽然只是实现了最简单的功能并满足了我的最基本需要，我还是希望在此之上能看起来更舒服一点。于是，在经历过今年的高考之后我便开始尝试实现下一个版本的导航页面了。</p>
+<p>而这个页面我有以下几点需求：</p>
+<pre><code>* 更紧凑一点的按钮
+* 暗黑模式和更好看点的配色
+* 升级到 Bootstrap 4
+</code></pre>
+<p>首先是这条“更紧凑的按钮”。在 Bootstrap 中，块级按钮直接会杵到页面的两端，不是特别美观。而得益于 Bootstrap 比较强大的响应式网格系统，解决方法也十分简单：在这12列的网格系统中（如下图 <sup id="a1"><a href="#f1">1</a></sup>），只需要把块级按钮所在的容器（container）分为三块，仅中间块放置块级按钮并占据10列，左右两块空白块分别占据剩下的两列，我们就得到了一个更为紧凑的按钮布局。</p>
+<p><img src="/Bootstrap%E7%BD%91%E6%A0%BC%E7%B3%BB%E7%BB%9F.png"></p>
+<p>其次是暗黑模式，现代人的用眼压力越来越大，在夜间看东西的时候也要少一份光明，多一分黑暗。而在这方面 W3C <sup id="a2"><a href="#f2">2</a></sup>也非常贴心，在 2020 年 7 月 31 日发布的 <a target="_blank" rel="noopener" href="https://www.w3.org/TR/mediaqueries-5/">Media Queries Level 5 标准草案</a> 中就提及了一个新的属性：prefers-color-scheme，其浏览器兼容情况如下图所示<sup id="a3"><a href="#f3">3</a></sup>。</p>
+<p><img src="/perfers-color-scheme%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%BC%E5%AE%B9%E6%83%85%E5%86%B5.png"></p>
+<p>有了这个属性，我们就可以让浏览器获取用户系统的情况（即是否打开暗黑模式），并对此作出反应。例如在<code>&lt;body&gt;</code>元素里设置一个“bgc”的类（随便取的名字，意为 background-color 的简称），在 CSS 里“bgc”这个类设定的是<code>background-color=&quot;black&quot;</code>。当浏览器检测到用户系统没有打开暗黑模式时就不使用“bgc”这个类，页面背景颜色就是白色；而当用户系统打开暗黑模式时就使用“bgc”这个类，页面背景颜色就变成了黑色。配置好了，就是<a href="https://nonefffds.github.io/RedirectionPageTemplate/index.html">以下的样子</a>。</p>
+<p><img src="/%E5%AF%B9%E6%AF%94.jpg"></p>
+<p>而最后一个目标，就是将一开始用的 Bootstrap 3 更新到 Bootstrap 4。<br>将旧版本语言写成的东西迁移到新版本语言一般都会非常令人难受，不过在我这个页面里也没有遇到什么特别多的障碍——主要是我这个页面也比较简单。也因此我只有一个地方需要做出改动：头像图片。<br>Bootstrap 4 对于图片的插入似乎和旧版相比有着全新的方式，响应式图片布局的类从过去的img-responsive变为了img-fluid，图片居中的类也从原来的只用 center-block变成了 <code>mx-auto</code> 和 <code>d-block</code><sup id="a4"><a href="#f4">4</a></sup>，一改就完事了。</p>
+<p>综上，最后我终于就写出来一个尚且能看还能用的导航页面，虽然每次添加链接都比较麻烦（因为不会后端），但似乎还能继续扩展功能（例如统计功能）。目前的想法是用服务器搭建一个短链接的程序（例如现成的 yourls），然后在这个页面的链接里使用短链接跳转，并在短链接的后台里查看点击的统计，不过那可能就是后话了。</p>
+<p>如果你对我做的这个小页面感兴趣的话，这个页面目前已经在 <a target="_blank" rel="noopener" href="https://github.com/nonefffds/RedirectionPageTemplate">GitHub 上开源</a>了，欢迎提出建议，也欢迎访问<a target="_blank" rel="noopener" href="https://brunhild.cn/nonefffds">我的网站</a>看我实际的应用。</p>
+<p>注释：</p>
+<p><b id="f1">1</b> 网格系统图片截图于 W3CSchool。<a target="_blank" rel="noopener" href="https://www.w3schools.com/bootstrap4/bootstrap_grid_basic.asp">https://www.w3schools.com/bootstrap4/bootstrap_grid_basic.asp</a> <a href="#a1">↩</a><br><b id="f2">2</b> 全称“World Wide Web Consortium”，中文名为“万维网联盟”，是万维网的主要国际标准组织。<a target="_blank" rel="noopener" href="https://www.w3.org/">https://www.w3.org</a> <a href="#a2">↩</a><br><b id="f3">3</b> 兼容情况截图于 MDN。<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/@media/prefers-color-scheme">https://developer.mozilla.org/zh-CN/docs/Web/CSS/@media/prefers-color-scheme</a> <a href="#a3">↩</a><br><b id="f4">4</b> 参考自 Stack Overflow。<a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/53115746/how-can-i-overwrite-the-style-of-primary-button-in-bootstrap">http://stackoverflow.com/questions/53115746/how-can-i-overwrite-the-style-of-primary-button-in-bootstrap</a> <a href="#a4">↩</a></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://nonefffds.github.io/2021/09/13/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E7%AE%80%E5%8D%95%E6%A8%A1%E4%BB%BF%E5%86%99%E5%87%BA%E7%A4%BE%E4%BA%A4%E8%B4%A6%E6%88%B7%E5%AF%BC%E8%88%AA%E9%A1%B5%E7%9A%84%E5%8E%86%E7%A8%8B/" title="从零开始，简单模仿写出社交账户导航页的历程" target="_blank" rel="external">https://nonefffds.github.io/2021/09/13/从零开始，简单模仿写出社交账户导航页的历程/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/nonefffds" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/nonefffds" target="_blank"><span class="text-dark">FDS</span><small class="ml-1x">A student, code-less coder.</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/09/14/python-python3/" title="在 shell 中使用 Python 命令时自动使用 Python3"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2020/04/11/Mac-%E5%BD%95%E5%B1%8F%E5%86%85%E5%BD%95%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" title="Mac 录屏内录解决方案"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/nonefffds" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/871761114" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/nonefffds" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Not available',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

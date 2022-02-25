@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Mac 录屏内录解决方案 | blog of nonefffds</title>
+  <meta name="description" content="Mac 录屏内录解决方案Yet simple enough, moreover fully functioned.本文已被少数派 Metrix 收录到主页推荐 前言18年最后一天在b站投了个如何用 Logic Pro X 调音的小教程，然后一直也有人在问 macOS 是用的什么软件录屏和录制系统声音的，因此在这写篇文章写一下如何在 macOS 实现屏幕和系统声音的录制。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mac 录屏内录解决方案">
+<meta property="og:url" content="https://nonefffds.github.io/2020/04/11/Mac-%E5%BD%95%E5%B1%8F%E5%86%85%E5%BD%95%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/index.html">
+<meta property="og:site_name" content="blog of nonefffds">
+<meta property="og:description" content="Mac 录屏内录解决方案Yet simple enough, moreover fully functioned.本文已被少数派 Metrix 收录到主页推荐 前言18年最后一天在b站投了个如何用 Logic Pro X 调音的小教程，然后一直也有人在问 macOS 是用的什么软件录屏和录制系统声音的，因此在这写篇文章写一下如何在 macOS 实现屏幕和系统声音的录制。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://nonefffds.github.io/15866287048477.png">
+<meta property="og:image" content="https://nonefffds.github.io/15866287392458.png">
+<meta property="og:image" content="https://nonefffds.github.io/15866288186989.png">
+<meta property="og:image" content="https://nonefffds.github.io/15866291699001.png">
+<meta property="og:image" content="https://nonefffds.github.io/15866292641899.png">
+<meta property="og:image" content="https://nonefffds.github.io/15866294910730.jpg">
+<meta property="article:published_time" content="2020-04-11T09:44:53.000Z">
+<meta property="article:modified_time" content="2022-02-25T07:53:42.249Z">
+<meta property="article:author" content="nonefffds">
+<meta property="article:tag" content="macOS">
+<meta property="article:tag" content="tools">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nonefffds.github.io/15866287048477.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://nonefffds.github.io/2020/04/11/Mac-%E5%BD%95%E5%B1%8F%E5%86%85%E5%BD%95%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="blog of nonefffds" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/nonefffds" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">FDS</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">A student, code-less coder.</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Tianjin &amp; Henan, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/nonefffds" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/871761114" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/nonefffds" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>Hello world!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AppleScript/" rel="tag">AppleScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BSD/" rel="tag">BSD</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bootstrap/" rel="tag">Bootstrap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Coding/" rel="tag">Coding</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/File-System/" rel="tag">File System</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-System/" rel="tag">Operating System</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/" rel="tag">Windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/macOS/" rel="tag">macOS</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/" rel="tag">tools</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/AppleScript/" style="font-size: 13px;">AppleScript</a> <a href="/tags/BSD/" style="font-size: 13.33px;">BSD</a> <a href="/tags/Bootstrap/" style="font-size: 13px;">Bootstrap</a> <a href="/tags/CSS/" style="font-size: 13px;">CSS</a> <a href="/tags/Coding/" style="font-size: 13.67px;">Coding</a> <a href="/tags/File-System/" style="font-size: 13px;">File System</a> <a href="/tags/HTML/" style="font-size: 13px;">HTML</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Operating-System/" style="font-size: 13px;">Operating System</a> <a href="/tags/Shell/" style="font-size: 13px;">Shell</a> <a href="/tags/Windows/" style="font-size: 13px;">Windows</a> <a href="/tags/macOS/" style="font-size: 14px;">macOS</a> <a href="/tags/python/" style="font-size: 13px;">python</a> <a href="/tags/tools/" style="font-size: 13.33px;">tools</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/09/14/python-python3/" class="title">在 shell 中使用 Python 命令时自动使用 Python3</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-09-14T13:15:13.000Z" itemprop="datePublished">2021-09-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/09/13/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E7%AE%80%E5%8D%95%E6%A8%A1%E4%BB%BF%E5%86%99%E5%87%BA%E7%A4%BE%E4%BA%A4%E8%B4%A6%E6%88%B7%E5%AF%BC%E8%88%AA%E9%A1%B5%E7%9A%84%E5%8E%86%E7%A8%8B/" class="title">从零开始，简单模仿写出社交账户导航页的历程</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-09-13T13:34:00.000Z" itemprop="datePublished">2021-09-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/04/11/Mac-%E5%BD%95%E5%B1%8F%E5%86%85%E5%BD%95%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="title">Mac 录屏内录解决方案</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-04-11T09:44:53.000Z" itemprop="datePublished">2020-04-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/04/10/%E6%BD%A6%E8%8D%89%E5%AD%A6%E4%B9%A0%20AppleScript%EF%BC%9AAppleScript%20%E5%88%9D%E4%B8%8A%E6%89%8B/" class="title">潦草学习 AppleScript：AppleScript 初上手</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-04-09T16:57:13.000Z" itemprop="datePublished">2020-04-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/02/25/%E4%BD%BF%E7%94%A8%20crontab%20%E8%AE%A1%E5%88%92%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E5%AE%9A%E6%97%B6%E7%BB%99%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99%E5%88%97%E8%A1%A8/" class="title">使用 crontab 计划定时任务定时给学习资料列表</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-02-24T16:57:13.000Z" itemprop="datePublished">2020-02-25</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Mac-录屏内录解决方案" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Mac 录屏内录解决方案
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/04/11/Mac-%E5%BD%95%E5%B1%8F%E5%86%85%E5%BD%95%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="article-date">
+	  <time datetime="2020-04-11T09:44:53.000Z" itemprop="datePublished">2020-04-11</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/macOS/" rel="tag">macOS</a>, <a class="article-tag-link-link" href="/tags/tools/" rel="tag">tools</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/04/11/Mac-%E5%BD%95%E5%B1%8F%E5%86%85%E5%BD%95%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="Mac-录屏内录解决方案"><a href="#Mac-录屏内录解决方案" class="headerlink" title="Mac 录屏内录解决方案"></a>Mac 录屏内录解决方案</h1><p><em>Yet simple enough, moreover fully functioned.</em><br><strong>本文已被少数派 Metrix 收录到主页推荐</strong></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>18年最后一天在b站投了个<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16t41167Gu">如何用 Logic Pro X 调音的小教程</a>，然后一直也有人在问 macOS 是用的什么软件录屏和录制系统声音的，因此在这写篇文章写一下如何在 macOS 实现屏幕和系统声音的录制。</p>
+<span id="more"></span>
+
+<p>在这里我要介绍一下 Background Music，这是一款能让你享受到和 Windows 上一样的分程序独立控制音量的软件，而且由于注册了系统内的虚拟音频 midi 设备，也可以对输入的音频进行转发（hijack）。这个软件在<a target="_blank" rel="noopener" href="https://sspai.com/post/52588">少数派的这篇文章</a>中也有提及。</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul>
+<li>苹果 macOS 系统（这篇文章仅支持 macOS，我目前使用的版本是 Catalina 10.15.4），如果你是 macOS 10.14 的系统（即 Mojave），你可以直接按 Command + Shift + 5 组合键直接开启录屏，方法在文章最后</li>
+<li>最新版 OBS，你可以使用 HomeBrew 安装：<code>brew cask install obs</code>，或者在<a target="_blank" rel="noopener" href="https://obsproject.com/">官网下载安装文件</a></li>
+<li>最新版 Background Music，你也可以使用 HomeBrew 安装 <code>brew cask install background-music</code>，或者在 <a target="_blank" rel="noopener" href="https://github.com/kyleneideck/BackgroundMusic/releases">GitHub 下载安装包</a></li>
+<li>脑子</li>
+</ul>
+<p><strong>注：如果系统内并没有 HomeBrew，请参考<a target="_blank" rel="noopener" href="https://sspai.com/post/42924">少数派的这篇文章</a></strong></p>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><p>安装 Background Music 时，你可能需要在 <code>系统偏好设置-&gt;安全性与隐私-&gt;通用</code>里点击允许安装才能正常安装。（如果你使用 HomeBrew 进行安装，命令行可能会通知你去设置里点击）</p>
+<p>安装完 Background Music 之后，你需要在 <code>系统偏好设置-&gt;声音-&gt;输出</code> 中选择 Background Music。</p>
+<p><img src="/15866287048477.png"><br>然后打开导航栏中的 Background Music 图标<img src="/15866287392458.png">，在 Output Device 下面的音频设备中点击你需要进行监听的外部设备（例如耳机，声卡）。<img src="/15866288186989.png"></p>
+<h3 id="使用-OBS-录制"><a href="#使用-OBS-录制" class="headerlink" title="使用 OBS 录制"></a>使用 OBS 录制</h3><p>接下来打开录屏软件，例如 OBS：<br><img src="/15866291699001.png"><br>打开设置-&gt;音频，将任意一个麦克风&#x2F;辅助音频选项选为 Background Music，然后点击确定，你就可以在 OBS 主页的最下方的混音器中的看到你的内录用的麦克风了。<img src="/15866292641899.png"><br>接下来你可以在电脑中放一首歌来测试一下看混音器里对应的音量条有没有动，或者录制一下再回放听一下有没有声音。</p>
+<h3 id="使用-macOS-自带录屏录制（需-macOS-Mojave-及更高版本系统）"><a href="#使用-macOS-自带录屏录制（需-macOS-Mojave-及更高版本系统）" class="headerlink" title="使用 macOS 自带录屏录制（需 macOS Mojave 及更高版本系统）"></a>使用 macOS 自带录屏录制（需 macOS Mojave 及更高版本系统）</h3><p>然后是针对 macOS 内置录屏的设置，同样也非常简单。<br>点击任意的录屏选项（部分录屏&#x2F;录制整个屏幕）后，在选项中的麦克风点击 Background Music 就可以了。<br><img src="/15866294910730.jpg"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>大概就是这样了…<br>之前我是用的 Soundflower 来进行的 hijack，然而 Soundflower 现在已经 deprecated 了，而且正好我也有调节各个程序音量的需求，所以我就直接用 Background Music 了…<br>如果你需要其他非本文提供方式来进行类似的操作，可以参考<a target="_blank" rel="noopener" href="https://sspai.com/post/36155">少数派的这篇文章</a><br>Overall，感谢阅读。</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>本文已被作者修改后投稿至少数派，并被推荐至 Matrix 精选和少数派首页。感谢。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://nonefffds.github.io/2020/04/11/Mac-%E5%BD%95%E5%B1%8F%E5%86%85%E5%BD%95%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" title="Mac 录屏内录解决方案" target="_blank" rel="external">https://nonefffds.github.io/2020/04/11/Mac-录屏内录解决方案/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/nonefffds" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/nonefffds" target="_blank"><span class="text-dark">FDS</span><small class="ml-1x">A student, code-less coder.</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/09/13/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E7%AE%80%E5%8D%95%E6%A8%A1%E4%BB%BF%E5%86%99%E5%87%BA%E7%A4%BE%E4%BA%A4%E8%B4%A6%E6%88%B7%E5%AF%BC%E8%88%AA%E9%A1%B5%E7%9A%84%E5%8E%86%E7%A8%8B/" title="从零开始，简单模仿写出社交账户导航页的历程"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2020/04/10/%E6%BD%A6%E8%8D%89%E5%AD%A6%E4%B9%A0%20AppleScript%EF%BC%9AAppleScript%20%E5%88%9D%E4%B8%8A%E6%89%8B/" title="潦草学习 AppleScript：AppleScript 初上手"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/nonefffds" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/871761114" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/nonefffds" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Not available',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
